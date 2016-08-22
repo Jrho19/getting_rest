@@ -9,3 +9,5 @@ CRUD(Create, Read, Update, Destroy) operations were a main focal point of this e
 The data was imported from a CSV file by using a Rake Task. The code requires the CSV class in lib/tasks/import.rake file.
 
 Tests were used in the spec/features/patient_appt_data_spec.rb file to ensure that the application could perform the desired functions.
+
+When importing data from the CSV file there were over lapping appointments so the rake task was aborted. Because I wanted to import all data I allowed the application to permit already existing data to be imported even they overlapped.

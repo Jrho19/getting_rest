@@ -8,7 +8,7 @@ namespace :import do
       pat_appt = row.to_hash
       pat_appt['start_time'] = Time.strptime(pat_appt['start_time'], "%D %R")
       pat_appt['end_time'] = Time.strptime(pat_appt['end_time'], "%D %R")
-      Patient.create! pat_appt
+      Patient.create pat_appt
     end
   end
 end
