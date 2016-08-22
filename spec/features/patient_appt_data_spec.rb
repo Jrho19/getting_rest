@@ -12,13 +12,13 @@ RSpec.feature "Patient appt data", type: :feature do
     )
   end
 
-  before do
-    visit api_v1_patient_path(patient)
-  end
-
   it "displays all patient's appt data" do
     visit api_v1_patients_path
     expect(page).to have_content
+  end
+  
+  before do
+    visit api_v1_patient_path(patient)
   end
 
   it "displays the patient's first name" do
