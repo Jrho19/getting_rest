@@ -1,43 +1,55 @@
 require 'rails_helper'
 
 # Integration test using rspec-rails gem and capybara
-RSpec.feature "Patient appt data", type: :feature do
-  let!(:patient)do
-    Patient.create(
-      start_time: "1pm",
-      end_time: "2pm",
-      first_name: "JR",
-      last_name: "Ryder",
-      comments: "Retired"
-    )
+RSpec.feature "Patient appt data", type: :request do
+  before(:all)do
+
+    @data = {
+      patient: {
+        start_time: "Mon, 22 Aug 2016 15:43:43 -0400",
+        end_time: "Mon, 22 Aug 2016 16:43:43 -0400",
+        first_name: "JR",
+        last_name: "Ryder",
+        comments: "Retired"
+      }
+    }
+
+
   end
 
   it "displays all patient's appt data" do
-    visit api_v1_patients_path
-    expect(page).to have_content
-  end
-  
-  before do
-    visit api_v1_patient_path(patient)
+    get('/api/v1/patients/')
+    expect(response).to have_http_status(200)
   end
 
-  it "displays the patient's first name" do
-    expect(page).to have_content patient.first_name
+  it "creates the patient's appt data" do
+    post('/api/v1/patients/', params: @data)
+    expect(response).to have_http_status(201)
   end
 
-  it "displays the patient's last name" do
-    expect(page).to have_content patient.last_name
+  it "updates the patient's appt data" do
+    a = Patient.create(
+      start_time: "Mon, 22 Aug 2016 17:43:43 -0400",
+      end_time: "Mon, 22 Aug 2016 18:43:43 -0400",
+      first_name: "JR",
+      last_name: "Ryder",
+      comments: "Updated"
+    )
+    b = a.id
+    put("/api/v1/patients/#{b}", params: @data)
+    expect(response).to have_http_status(202)
   end
 
-  it "displays the patient's start time" do
-    expect(page).to have_content patient.start_time
-  end
-
-  it "displays the patient's end time" do
-    expect(page).to have_content patient.end_time
-  end
-
-  it "displays the patient's comments" do
-    expect(page).to have_content patient.comments
+  it "updates the patient's appt data is booked" do
+    a = Patient.create(
+      start_time: "Mon, 22 Aug 2016 16:40:43 -0400",
+      end_time: "Mon, 22 Aug 2016 17:43:43 -0400",
+      first_name: "JR",
+      last_name: "Ryder",
+      comments: "Updated"
+    )
+    b = a.id
+    put("/api/v1/patients/#{b}", params: @data)
+    expect(response).to have_http_status(422)
   end
 end

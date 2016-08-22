@@ -16,8 +16,8 @@ ActiveRecord::Schema.define(version: 20160821235428) do
   enable_extension "plpgsql"
 
   create_table "patients", force: :cascade do |t|
-    t.string   "start_time"
-    t.string   "end_time"
+    t.datetime "start_time"
+    t.datetime "end_time"
     t.string   "first_name"
     t.string   "last_name"
     t.string   "comments"
