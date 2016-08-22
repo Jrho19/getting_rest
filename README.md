@@ -10,4 +10,4 @@ The data was imported from a CSV file by using a Rake Task. The code requires th
 
 Tests were used in the spec/features/patient_appt_data_spec.rb file to ensure that the application could perform the desired functions.
 
-When importing data from the CSV file there were over lapping appointments so the rake task was aborted. Because I wanted to import all data I allowed the application to permit already existing data to be imported even they overlapped.
+Initially, when importing data from the CSV file there were over lapping appointments so the rake task was aborted. However the validation in the patient model did not allow overlapping appointments to be created.
