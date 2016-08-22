@@ -1,6 +1,6 @@
 # README
 
-This is an exercise building a RESTful API in Rails. It also includes, but not limited to Integration Tests, CRUD operations, and Rake Tasks to import data from a CSV file.
+This is an exercise building a RESTful API in Rails. It also includes, but is not limited to Integration Tests, CRUD operations, and Rake Tasks to import data from a CSV file.
 
 Within the application you will find an API built to accommodate version control and formatted to JSON. The use of a gem named "Active Model Serializers" helps with convention.
 
