@@ -52,7 +52,7 @@ RSpec.feature "Patient appt data", type: :request do
     put("/api/v1/patients/#{b}", params: @data)
     expect(response).to have_http_status(422)
   end
-
+  # For the time being I expect this test to fail, it is a sign that the appt won't be created if in the past.
   it "attempts to update the patient's appt data to a past time slot" do
     a = Patient.create(
       start_time: "Mon, 22 Aug 2016 14:43:43 -0400",
