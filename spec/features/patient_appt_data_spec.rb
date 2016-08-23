@@ -6,8 +6,8 @@ RSpec.feature "Patient appt data", type: :request do
 
     @data = {
       patient: {
-        start_time: "Mon, 22 Aug 2016 15:43:43 -0400",
-        end_time: "Mon, 22 Aug 2016 16:43:43 -0400",
+        start_time: "Mon, 22 Aug 2017 15:43:43 -0400",
+        end_time: "Mon, 22 Aug 2017 16:43:43 -0400",
         first_name: "JR",
         last_name: "Ryder",
         comments: "Retired"
@@ -29,8 +29,8 @@ RSpec.feature "Patient appt data", type: :request do
 
   it "updates the patient's appt data" do
     a = Patient.create(
-      start_time: "Mon, 22 Aug 2016 17:43:43 -0400",
-      end_time: "Mon, 22 Aug 2016 18:43:43 -0400",
+      start_time: "Mon, 22 Aug 2017 17:43:43 -0400",
+      end_time: "Mon, 22 Aug 2017 18:43:43 -0400",
       first_name: "JR",
       last_name: "Ryder",
       comments: "Updated"
@@ -40,10 +40,23 @@ RSpec.feature "Patient appt data", type: :request do
     expect(response).to have_http_status(202)
   end
 
-  it "updates the patient's appt data is booked" do
+  it "updates the patient's appt data to test if they can be double booked" do
     a = Patient.create(
-      start_time: "Mon, 22 Aug 2016 16:40:43 -0400",
-      end_time: "Mon, 22 Aug 2016 17:43:43 -0400",
+      start_time: "Mon, 22 Aug 2017 16:40:43 -0400",
+      end_time: "Mon, 22 Aug 2017 17:43:43 -0400",
+      first_name: "JR",
+      last_name: "Ryder",
+      comments: "Updated"
+    )
+    b = a.id
+    put("/api/v1/patients/#{b}", params: @data)
+    expect(response).to have_http_status(422)
+  end
+
+  it "attempts to update the patient's appt data to a past time slot" do
+    a = Patient.create(
+      start_time: "Mon, 22 Aug 2016 14:43:43 -0400",
+      end_time: "Mon, 22 Aug 2016 15:43:43 -0400",
       first_name: "JR",
       last_name: "Ryder",
       comments: "Updated"
